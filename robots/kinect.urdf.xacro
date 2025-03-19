@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:xacro="http://ros.org/wiki/xacro"
+       name="kinect_camera" >
+  
+  <!-- kinect camera for image and deph visualization-->
+  <xacro:include filename="$(find youbot_description)/urdf/sensors/kinect_camera3.urdf.xacro" />
+
+
+  <!-- kinect camera -->
+  <xacro:kinect_camera3 name="camera_endpoint" parent="base_link" ros_topic="base_scan" update_rate="10" min_angle="-1.57" max_angle="1.57">
+    <origin xyz="0 -4 0" rpy="0 0 1.57" />
+  </xacro:kinect_camera3>
+
+  </robot>

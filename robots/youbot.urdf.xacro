@@ -12,6 +12,9 @@
   <!-- youbot base -->
   <xacro:include filename="$(find youbot_description)/urdf/youbot_base/base.urdf.xacro" />
 
+  <!-- youbot camera -->
+  <xacro:include filename="$(find youbot_description)/urdf/sensors/microsoft_lifecam.urdf.xacro" />
+
   <!-- youbot plate -->
   <xacro:include filename="$(find youbot_description)/urdf/youbot_plate/plate.urdf.xacro" /> 
 
@@ -27,8 +30,14 @@
   <!-- materials for visualization -->
   <xacro:include filename="$(find youbot_description)/urdf/materials.urdf.xacro" />
 
+  <!-- kinect camera for image and deph visualization-->
+  <xacro:include filename="$(find youbot_description)/urdf/sensors/kinect_camera.urdf.xacro" />
+
+    <!-- kinect camera 2 for second image and deph visualization-->
+  <xacro:include filename="$(find youbot_description)/urdf/sensors/kinect_camera2.urdf.xacro" />
+
   <!-- sensors -->
-  <xacro:include filename="$(find youbot_description)/urdf/sensors/hokuyo_urg04_laser.urdf.xacro"/>
+  <!-- <xacro:include filename="$(find youbot_description)/urdf/sensors/hokuyo_urg04_laser.urdf.xacro"/> -->
 						     
   <!-- Now we can start using the macros xacro:included above to define the actual youbot -->
 
@@ -55,10 +64,20 @@
     <origin xyz="0 0 0" rpy="0 0 0" />
   </xacro:youbot_gripper>
 
+  <!-- kinect camera -->
+  <xacro:kinect_camera name="camera_endpoint" parent="arm_link_5" ros_topic="base_scan" update_rate="10" min_angle="-1.57" max_angle="1.57">
+    <origin xyz="-0.08 0 0.03" rpy="0 4.71239 0" />
+  </xacro:kinect_camera>
+  
+  <!-- kinect second camera -->
+  <xacro:kinect_camera2 name="camera2" parent="base_link" ros_topic="base_scan" update_rate="10" min_angle="-1.57" max_angle="1.57">
+    <origin xyz="0.35 0 0.085" rpy="0 0 0" />
+  </xacro:kinect_camera2>
+
   <!-- base laser front -->
-  <xacro:hokuyo_urg04_laser name="base_laser_front" parent="base" ros_topic="base_scan" update_rate="10" min_angle="-1.57" max_angle="1.57">
+  <!-- <xacro:hokuyo_urg04_laser name="base_laser_front" parent="base" ros_topic="base_scan" update_rate="10" min_angle="-1.57" max_angle="1.57">
     <origin xyz="0.3 0 -0.03" rpy="0 0 0"/>
-  </xacro:hokuyo_urg04_laser>
+  </xacro:hokuyo_urg04_laser> -->
 
   
 </robot>

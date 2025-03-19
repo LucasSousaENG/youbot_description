@@ -1,0 +1,63 @@
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find youbot_description)/urdf/sensors/kinect_camera3.gazebo.xacro" />
+  <!-- <xacro:include filename="$(find youbot_description)/urdf/sensors/kinect_camera2.gazebo.xacro" /> -->
+
+  <xacro:macro name="kinect_camera3" params="name parent *origin ros_topic update_rate min_angle max_angle">
+    <!-- Define link and visuals for the camera -->
+    <link name="${name}" type="laser">
+      <!-- Set inertial properties to disable gravity -->
+      <inertial>
+        <mass value="0.16" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <!-- Set all inertial tensor values to zero to disable gravity -->
+        <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://youbot_description/meshes/sensors/kinect.dae"/>
+        </geometry>
+        <material name="DarkGrey" />
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://youbot_description/meshes/sensors/kinect.dae"/>
+        </geometry>
+      </collision>
+    </link>
+    
+    <!-- Spawn the camera fixed -->
+    <gazebo reference="${name}">
+      <sensor type="camera" name="${name}_sensor">
+        <always_on>true</always_on>
+        <!-- Define camera properties as needed -->
+        <!-- For example:
+        <update_rate>50</update_rate>
+        <camera>
+          <horizontal_fov>1.047</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.02</near>
+            <far>200</far>
+          </clip>
+        </camera>
+        -->
+      </sensor>
+    </gazebo>
+
+    <!-- Include any additional properties you want to define for the camera -->
+
+    <!-- Include the gazebo extension for the kinect camera -->
+    <xacro:kinect_camera_gazebo3 name="${name}" ros_topic="${ros_topic}" update_rate="${update_rate}" min_angle="${min_angle}" max_angle="${max_angle}" />
+  </xacro:macro>
+
+</robot>
